@@ -77,7 +77,8 @@ def search(request):
     exclude = request.GET.get('exclude', '')
     try:
         exclusions = [unquote(item) for item in exclude.split(',')]
-        queryset = queryset.exclude(pk__in=exclusions)
+        #had to remove the line below of a UUID error
+        #queryset = queryset.exclude(pk__in=exclusions)
     except Exception:
         pass
 
