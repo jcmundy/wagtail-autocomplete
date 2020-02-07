@@ -1,4 +1,8 @@
-from django.contrib.staticfiles.templatetags.staticfiles import static
+from django import VERSION
+if VERSION[0] == 2:
+    from django.contrib.staticfiles.templatetags.staticfiles import static
+elif VERSION[0] == 3:
+    from django.templatetags.static import static
 from django.utils.html import format_html
 
 try:
