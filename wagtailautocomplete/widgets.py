@@ -22,10 +22,10 @@ class Autocomplete(Widget):
         if type(value) == list:
             return json.dumps([
                 render_page(page)
-                for page in self.target_model.objects.filter(id__in=value)
+                for page in self.target_model.objects.filter(pk__in=value)
             ])
         else:
-            return json.dumps(render_page(self.target_model.objects.get(id=value)))
+            return json.dumps(render_page(self.target_model.objects.get(pk=value)))
 
     def value_from_datadict(self, data, files, name):
         value = json.loads(data.get(name))
@@ -33,9 +33,9 @@ class Autocomplete(Widget):
             return None
 
         if type(value) == list:
-            return [obj['id'] for obj in value]
+            return [obj['pk'] for obj in value]
 
-        return value['id']
+        return value['pk']
 
     def render(self, name, value, attrs=None, renderer=None):
         return widget_with_script(

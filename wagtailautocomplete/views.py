@@ -15,13 +15,13 @@ def render_page(page):
         title = page.autocomplete_label()
     else:
         title = page.title
-    return dict(id=page.id, title=title)
+    return dict(pk=page.pk, title=title)
 
 
 @require_GET
 def objects(request):
-    ids_param = request.GET.get('ids')
-    if not ids_param:
+    pks_param = request.GET.get('pks')
+    if not pks_param:
         return HttpResponseBadRequest()
     target_model = request.GET.get('type', 'wagtailcore.Page')
     try:
@@ -30,11 +30,11 @@ def objects(request):
         return HttpResponseBadRequest()
 
     try:
-        ids = [
-            unquote(id)
-            for id in ids_param.split(',')
+        pks = [
+            unquote(pk)
+            for pk in pks_param.split(',')
         ]
-        queryset = model.objects.filter(id__in=ids)
+        queryset = model.objects.filter(pk__in=pks)
     except Exception:
         return HttpResponseBadRequest()
 
