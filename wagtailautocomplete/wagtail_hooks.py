@@ -5,12 +5,7 @@ elif VERSION[0] == 3:
     from django.templatetags.static import static
 from django.utils.html import format_html
 
-try:
-    # Wagtail 2.x
-    from wagtail.core import hooks
-except ImportError:
-    # Wagtail 1.x
-    from wagtail.wagtailcore import hooks
+from wagtail.core import hooks
 
 
 @hooks.register('insert_editor_js')
