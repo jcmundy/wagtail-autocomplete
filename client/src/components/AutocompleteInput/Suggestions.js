@@ -88,8 +88,8 @@ class Suggestions extends PureComponent {
       return true;
     }
 
-    const currentId = suggestions[index].pk;
-    return nextProps.suggestions[index].pk !== currentId;
+    const currentId = suggestions[index].id;
+    return nextProps.suggestions[index].id !== currentId;
   }
 
   handleMouseEnter(index) {
@@ -226,7 +226,7 @@ class Suggestions extends PureComponent {
         >
           {suggestions.map((suggestion, index) => (
             <li
-              key={suggestion.pk}
+              key={suggestion.id}
               onClick={onClick.bind(null, suggestion)}
               onMouseEnter={this.handleMouseEnter.bind(this, index)}
               className={classNames("suggestions__item", {

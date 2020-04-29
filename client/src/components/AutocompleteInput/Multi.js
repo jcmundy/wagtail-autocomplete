@@ -18,7 +18,7 @@ class Multi extends PureComponent {
 
   handleRemove(page) {
     const { onClick, selections } = this.props;
-    onClick(selections.filter(({ pk }) => pk !== page.pk));
+    onClick(selections.filter(({ id }) => id !== page.id));
   }
 
   render() {
@@ -35,7 +35,7 @@ class Multi extends PureComponent {
       if (!selections) {
         return true;
       }
-      return selections.every(({ pk }) => pk !== suggestion.pk);
+      return selections.every(({ id }) => id !== suggestion.id);
     });
 
     return (
@@ -56,7 +56,7 @@ class Multi extends PureComponent {
         <span className={nc("layout__item", "layout__item--padded")}>
           {selections.length === 0 && <span>Nothing selected.</span>}
           {selections.map(selection => (
-            <div key={selection.pk} className={nc("selection")}>
+            <div key={selection.id} className={nc("selection")}>
               <span className={nc("selection__label")}>{selection.title}</span>
 
               <button

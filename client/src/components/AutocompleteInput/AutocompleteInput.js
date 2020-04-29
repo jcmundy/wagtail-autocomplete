@@ -56,7 +56,7 @@ class AutocompleteInput extends PureComponent {
     }
 
     if (this.props.isSingle && value) {
-      return value.pk;
+      return value.id;
     }
 
     return value.map(({ id }) => id).join(",");
@@ -89,38 +89,39 @@ class AutocompleteInput extends PureComponent {
       return;
     }
 
-    let pks = null;
+    let ids = null;
     if (isMulti) {
-      ids = value.map(({ pk }) => encodeURI(pk)).join(",");
+       ids = value.map(({ id }) => id).join(',');
     } else {
-      pks = value.pk;
+       ids = value.id;
     }
 
     getObjects({
       apiBase: this.props.apiBase,
-      pks,
-      type: this.props.type
-    }).then(items => {
-      let newValue = null;
-      if (isMulti) {
-        newValue = this.state.value.map(val => {
-          const page = items.find(obj => obj.pk === val.pk);
-          if (!page) {
-            return val;
-          }
+      ids,
+      type: this.props.type,
+    })
+      .then(items => {
+        let newValue = null;
+        if (isMulti) {
+          newValue = this.state.value.map(val => {
+            const page = items.find(obj => obj.id === val.id);
+            if (!page) {
+              return val;
+            }
 
-          return page;
-        });
-      } else {
-        newValue = items[0];
-      }
+            return page;
+          });
+        } else {
+          newValue = items[0];
+        }
 
-      this.setState({ value: newValue });
+        this.setState({ value: newValue });
 
-      if (typeof this.props.onChange === "function") {
-        this.props.onChange({ target: { value: newValue } });
-      }
-    });
+        if (typeof this.props.onChange === 'function') {
+          this.props.onChange({ target: { value: newValue } });
+        }
+     });
   }
 
   handleClick(value) {
